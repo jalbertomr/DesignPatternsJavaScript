@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Patrones de Diseño</title>
+	<script src="js/observerV2.js"></script>
+</head>
+<body>
+<button id="btn" onclick="test();">Observer Pattern</button>
+<button id="btnevent">Observer Pattern (eventListener)</button>
+	<script>
+		document.getElementById("btnevent").addEventListener("click", function(){
+			 test();
+		});
+	</script>
+</body>
+</html>

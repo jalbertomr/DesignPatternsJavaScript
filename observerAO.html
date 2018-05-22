@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Observer Pattern (Addy Osmani)</title>
+	<script src="js/observerAO.js"></script>
+</head>
+<body>
+	<button id="addNewObserver">Add New Observer checkbox</button>
+	Notificar a Observers <input id="mainCheckbox" type="checkbox"/>
+	<div id="observersContainer"></div>
+	<script>
+		//Extiende un objeto con una extension
+		function extend( obj, extension ) {
+			for( var key in extension) {
+				obj[key] = extension[key];
+			}
+		}
+
+		//Referencias a nuestros elementos DOM
+
+		var controlCheckbox = document.getElementById( "mainCheckbox" ),
+				addBtn = document.getElementById( "addNewObserver" ),
+				container = document.getElementById( "observersContainer" );
+
+		// Concrete Subject
+
+		// Extend le checkbox de control con la clase Subject
+		extend( controlCheckbox, new Subject() );
+
+		//Clicking el checkbox dispararar notificaciones a sus observers
+		controlCheckbox.onclick = function() {
+			controlCheckbox.notify( controlCheckbox.checked );
+		};
+
+		addBtn.onclick = addNewObserver;
+
+		// Concrete Observer
+
+		function addNewObserver() {
+		  // crear un nuevo checkbox para aggregarlo
+			var check = document.createElement( "input" );
+			check.type = "checkbox";
+
+			// Extiende el checkbox con la clase Observer
+			extend( check, new Observer() );
+
+			// Sobreescribe update con comportamiento personalizado
+			check.update = function( value ){
+				this.checked = value;
+			};
+
+			// Agrega el nuevo observer a la lista de observers
+			// para nuestro subject principal
+			controlCheckbox.addObserver( check );
+
+			// append el item al contenedor
+			container.appendChild( check );
+		}
+	</script>
+</body>
+</html>
